@@ -1,0 +1,23 @@
+http:
+  routers:
+    whoami:
+      service: whoami
+      rule: Host(`whoami.docker.localhost`)
+    whoareyou:
+      service: whoareyou
+      rule: Host(`whoareyou.docker.localhost`)
+
+  middlewares:
+    auth:
+      forwardauth:
+        address: http://auth
+
+  services:
+    whoami:
+      loadBalancer:
+        servers:
+          - url: http://whoami
+    whoareyou:
+      loadBalancer:
+        servers:
+          - url: http://whoareyou

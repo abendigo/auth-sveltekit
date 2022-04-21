@@ -1,0 +1,39 @@
+## traefik.yml
+log:
+  level: INFO
+
+accessLog: {}
+
+entryPoints:
+  http:
+    address: ':80'
+  #   http:
+  #     redirections:
+  #       entrypoint:
+  #         to: https
+  #         scheme: https
+  # https:
+  #   address: ':443'
+
+providers:
+  file:
+    directory: dynamic
+    watch: true
+
+# API and dashboard configuration
+api:
+  dashboard: true
+  insecure: true
+# metrics:
+#   prometheus: {}
+
+# certificatesResolvers:
+#   letsencrypt:
+#     acme:
+#       email: mark@oosterveld.org
+#       storage: acme.json
+#       httpChallenge:
+#         entryPoint: http
+
+# pilot:
+#   token: "2aff8883-aa04-4b7b-a0e2-5b429790c47e"

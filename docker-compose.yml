@@ -1,0 +1,35 @@
+services:
+  traefik:
+    image: traefik:v2.6
+    ports:
+      - 80:80
+      # - 443:443
+      - 8080:8080
+    volumes:
+      - ./configs/traefik/traefik.yml:/traefik.yml:ro
+      - ./configs/traefik/dynamic:/dynamic:ro
+      # - ./configs/traefik/acme.json:/acme.json:rw
+
+  auth:
+    image: node:16
+    ports:
+      - 3000:3000
+      - 24678:24678
+    command: npm run dev
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+
+  whoami:
+    # A container that exposes an API to show its IP address
+    image: traefik/whoami
+    # labels:
+    #   - 'traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)'
+    #   - 'traefik.http.routers.whoami.middlewares=auth@docker'
+
+  whoareyou:
+    # A container that exposes an API to show its IP address
+    image: traefik/whoami
+    # labels:
+    #   - 'traefik.http.routers.whoareyou.rule=Host(`whoareyou.docker.localhost`)'
+    #   - 'traefik.http.routers.whoareyou.middlewares=auth@docker'
