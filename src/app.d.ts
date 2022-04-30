@@ -4,12 +4,19 @@
 // for information about these interfaces
 declare namespace App {
 	interface Locals {
-		userid: string;
+		id: string;
+		link: string;
+		'csrf.token': string;
+		user: any;
 	}
 
 	// interface Platform {}
 
-	// interface Session {}
+	interface Session {
+		id: string;
+		link: string;
+		'csrf.token': string;
+	}
 
 	// interface Stuff {}
 }

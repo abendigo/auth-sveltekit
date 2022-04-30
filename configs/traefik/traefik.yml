@@ -2,7 +2,7 @@
 log:
   level: INFO
 
-accessLog: {}
+# accessLog: {}
 
 entryPoints:
   http:

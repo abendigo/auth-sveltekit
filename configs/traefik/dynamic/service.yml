@@ -1,23 +1,49 @@
 http:
   routers:
     whoami:
-      service: whoami
       rule: Host(`whoami.docker.localhost`)
+      middlewares: auth@file
+      service: whoami
     whoareyou:
-      service: whoareyou
       rule: Host(`whoareyou.docker.localhost`)
+      service: whoami
+    one:
+      rule: Host(`one.docker.localhost`)
+      middlewares: auth@file
+      service: whoami
+    two:
+      rule: Host(`two.docker.localhost`)
+      middlewares: auth@file
+      service: whoami
+    three:
+      rule: Host(`three.docker.localhost`)
+      middlewares: auth@file
+      service: whoami
+    four:
+      rule: Host(`four.docker.localhost`)
+      middlewares: auth@file
+      service: whoami
+    five:
+      rule: Host(`five.docker.localhost`)
+      middlewares: auth@file
+      service: whoami
+    dashboard:
+      rule: Host(`traefik.docker.localhost`) && PathPrefix(`/`)
+      middlewares: auth@file
+      service: dashboard@internal
+    api:
+      rule: Host(`traefik.docker.localhost`) && PathPrefix(`/api`)
+      middlewares: auth@file
+      service: api@internal
 
   middlewares:
     auth:
       forwardauth:
-        address: http://auth
+        address: http://auth:3000/auth
+        trustForwardHeader: true
 
   services:
     whoami:
       loadBalancer:
         servers:
           - url: http://whoami
-    whoareyou:
-      loadBalancer:
-        servers:
-          - url: http://whoareyou

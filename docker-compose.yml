@@ -23,13 +23,18 @@ services:
   whoami:
     # A container that exposes an API to show its IP address
     image: traefik/whoami
-    # labels:
-    #   - 'traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)'
-    #   - 'traefik.http.routers.whoami.middlewares=auth@docker'
 
-  whoareyou:
-    # A container that exposes an API to show its IP address
-    image: traefik/whoami
-    # labels:
-    #   - 'traefik.http.routers.whoareyou.rule=Host(`whoareyou.docker.localhost`)'
-    #   - 'traefik.http.routers.whoareyou.middlewares=auth@docker'
+  # whoareyou:
+  #   # A container that exposes an API to show its IP address
+  #   image: traefik/whoami
+
+  # one:
+  #   image: traefik/whoami
+  # two:
+  #   image: traefik/whoami
+  # three:
+  #   image: traefik/whoami
+  # four:
+  #   image: traefik/whoami
+  # five:
+  #   image: traefik/whoami
