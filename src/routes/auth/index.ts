@@ -1,13 +1,14 @@
 import type { RequestHandler } from '@sveltejs/kit';
 
-import { updateLocals } from '../../lib/store';
+// import { updateLocals } from '../../lib/store.js';
 
 let link = 1;
 
 export const get: RequestHandler = async ({ locals, request }) => {
-	console.log('------------------------------------------');
-	console.log('locals', locals);
-	console.log('------------------------------------------');
+	// export const get = async ({ locals, request }: any) => {
+	// console.log('------------------------------------------');
+	// console.log('locals', locals);
+	// console.log('------------------------------------------');
 
 	// Check for grants here
 	if (locals.user) {

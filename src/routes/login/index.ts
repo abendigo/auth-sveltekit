@@ -1,19 +1,23 @@
 import type { RequestHandler, RequestHandlerOutput } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit/types/private';
 
-import { deleteLocals, getUser, getLocalsByLink, updateLocals } from '../../lib/store';
+// import { deleteLocals, getUser, getLocalsByLink, updateLocals } from '../../lib/store.js';
+import { getStore } from '../../lib/store.js';
 
-export const post: RequestHandler = async ({ locals, request }) => {
+export const post: RequestHandler = async ({ request }) => {
+	const store = getStore();
+
 	const { username, password, token }: { username: string; password: string; token: string } =
 		await request.json();
 
-	console.log(locals);
+	// console.log(locals);
 	// Check the CSRF Token
 	const [csrf, link] = token.split(':');
-	console.log('----', csrf, link);
 
-	const user = getUser(username, password);
-	console.log('==== user', user);
+	console.log('login', username, password, token, link);
+
+	const user = store.getUser(username, password);
+
 	if (!user) {
 		return {
 			status: 200,
@@ -25,10 +29,11 @@ export const post: RequestHandler = async ({ locals, request }) => {
 	}
 
 	// Got a valid User. Find the Local Session
-	const xxx = getLocalsByLink(link);
+	const xxx = store.getLocalsByLink(link);
 	console.log('xxx', xxx);
-
-	updateLocals(xxx.id, { user: user });
+	if (xxx) {
+		store.updateLocals(xxx.id, { user: user });
+	}
 
 	// if (user.auth_id) {
 	// 	if (user.auth_id !== locals.id) {

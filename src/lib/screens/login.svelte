@@ -1,8 +1,8 @@
 <script lang="ts">
 	export let token: string;
 
-	let username = 'username';
-	let password = 'password';
+	let username = '';
+	let password = '';
 	let error = '';
 
 	let promise: Promise<any>;

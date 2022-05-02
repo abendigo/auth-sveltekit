@@ -2,7 +2,7 @@
 	import type { Load } from '@sveltejs/kit';
 
 	export const load: Load = async ({ session, error, status }) => {
-		console.log('___error', error, error?.name, error.message);
+		// console.log('___error', error, error?.name, error.message);
 		return {
 			props: { status, error, session }
 		};

@@ -3,15 +3,17 @@ import type { Handle } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit/types/private';
 import * as cookie from 'cookie';
 
-import { createLocals, getLocals } from './lib/store';
+import { createStore, getStore } from './lib/store';
 
 const SESSION_COOKIE = 'auth.sid';
 
 export const handle: Handle = async ({ event, resolve }) => {
+	const store = getStore() || createStore();
+
 	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
 	const sid = cookies[SESSION_COOKIE] || uuid();
 
-	event.locals = getLocals(sid) || createLocals(sid, {});
+	event.locals = store.getLocals(sid) || store.createLocals(sid, {});
 
 	// console.log('==== before ===================', event.locals);
 	const response = await resolve(event);
