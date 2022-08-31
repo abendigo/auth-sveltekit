@@ -14,11 +14,12 @@ export const post: RequestHandler = async ({ request }) => {
 	// Check the CSRF Token
 	const [csrf, link] = token.split(':');
 
-	console.log('login', username, password, token, link);
+	console.log('login post', { username, password, token, link, store });
 
 	const user = store.getUser(username, password);
 
 	if (!user) {
+		console.log('--- not found ---');
 		return {
 			status: 200,
 			body: {
@@ -30,7 +31,6 @@ export const post: RequestHandler = async ({ request }) => {
 
 	// Got a valid User. Find the Local Session
 	const xxx = store.getLocalsByLink(link);
-	console.log('xxx', xxx);
 	if (xxx) {
 		store.updateLocals(xxx.id, { user: user });
 	}

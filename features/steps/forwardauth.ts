@@ -6,8 +6,10 @@ import { ActorWorld, ActorParameterType } from '@cucumber/screenplay';
 import type { Actor } from '@cucumber/screenplay';
 import type World from '../support/world.js';
 
-// import { visit } from '../support/tasks/session/visit.js';
-import { authenticate, visit } from '../support/tasks/http/visit.js';
+import { visit } from '../support/tasks/session/visit.js';
+// import { authenticate, visit } from '../support/tasks/http/visit.js';
+// import { authenticate, visit } from '../support/tasks/fullstack/visit.js';
+
 import type { RequestHandlerOutput } from '@sveltejs/kit';
 
 // Define an {actor} parameter type that creates Actor objects
@@ -22,9 +24,7 @@ Given('{actor} is not authenticated', function (actor: Actor) {
 });
 
 When('{actor} visits foo.com', async function (actor: Actor<World>) {
-	const response: RequestHandlerOutput = await actor.attemptsTo(
-		visit('http://one.docker.localhost')
-	);
+	const response: RequestHandlerOutput = await actor.attemptsTo(visit('foo.com'));
 
 	actor.remember('response', response);
 });

@@ -1,5 +1,7 @@
 import { v4 as uuid } from '@lukeed/uuid';
 
+// import '../../app.d.ts';
+
 var forwardAuthStore;
 
 export function getStore() {
@@ -14,7 +16,7 @@ export function createStore() {
 	console.log('------------------------------------');
 
 	const locals = new Map<string, App.Locals>();
-	let users = [
+	const users = [
 		{
 			id: 111,
 			username: 'mark',
@@ -35,7 +37,7 @@ export function createStore() {
 
 		dumpLocals: function () {
 			console.log('=========== locals ===========');
-			for (let local in locals.values()) {
+			for (const local in locals.values()) {
 				console.log(local);
 			}
 			console.log('==============================');
@@ -52,7 +54,13 @@ export function createStore() {
 			});
 		},
 
-		createLocals: function (id: string, data?: any): App.Locals {
+		getLocalsForUser: function (username: string): App.Locals | undefined {
+			return Array.from(locals.values()).find((next) => {
+				return next.user?.username === username;
+			});
+		},
+
+		createLocals: function (id: string = uuid(), data?: any): App.Locals {
 			// console.log('----------- createLocals', id, locals);
 			// assert(!locals.has(id));
 

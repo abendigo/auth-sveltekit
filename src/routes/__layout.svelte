@@ -1,3 +1,16 @@
+<script context="module">
+	import { HttpSessionHandler } from '../lib/sessionHandler/HttpSessionHandler';
+
+	/** @type {import('./[slug]').Load} */
+	export async function load(/*{ params, fetch, session, stuff }*/) {
+		return {
+			stuff: {
+				sessionHandler: new HttpSessionHandler('')
+			}
+		};
+	}
+</script>
+
 <script lang="ts">
 	import Header from '$lib/header/Header.svelte';
 	import '../app.css';

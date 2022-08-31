@@ -16,6 +16,7 @@ export const get: RequestHandler = async ({ locals, request }) => {
 	}
 
 	const { headers } = request;
+	console.log('headers', headers);
 
 	const xForwardedUri: string = headers.get('x-forwarded-uri') || '';
 	const xForwardedMethod: string = headers.get('x-forwarded-method') || 'GET';
@@ -42,6 +43,8 @@ export const get: RequestHandler = async ({ locals, request }) => {
 			headers: { location: `http://auth.docker.localhost:3000${xForwardedUri}` }
 		};
 	}
+
+	console.log('401', xForwardedMethod, xForwardedUri);
 
 	return { status: 401 };
 };

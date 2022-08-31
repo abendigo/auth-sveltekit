@@ -1,5 +1,7 @@
 /// <reference types="@sveltejs/kit" />
 
+// import type { SessionHandler } from './lib/SessionHandler';
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare namespace App {
@@ -20,5 +22,7 @@ declare namespace App {
 		'csrf.token'?: string;
 	}
 
-	// interface Stuff {}
+	interface Stuff {
+		sessionHandler?: SessionHandler;
+	}
 }

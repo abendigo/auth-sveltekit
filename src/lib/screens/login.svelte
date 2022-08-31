@@ -1,5 +1,10 @@
 <script lang="ts">
+	import type { LoginSessionHandler } from './login.session';
+
 	export let token: string;
+	export let session: LoginSessionHandler;
+
+	console.log('session', session);
 
 	let username = '';
 	let password = '';
@@ -7,24 +12,10 @@
 
 	let promise: Promise<any>;
 
-	async function validate() {
-		console.log({ username, password, token });
-		// const response = await fetch('/auth/login', {
-		const response = await fetch('/login', {
-			method: 'post',
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				username,
-				password,
-				token
-			})
-		});
-		console.log(response);
-		const json = await response.json();
-		console.log(json);
+	async function validate(username: string, password: string, token: string) {
+		console.log('=== session ===', session);
+
+		const json = await session.validate(username, password, token);
 
 		if (json.code === 200) {
 			location.reload();
@@ -34,7 +25,7 @@
 	}
 
 	function submitHandler() {
-		promise = validate();
+		promise = validate(username, password, token);
 	}
 </script>
 
@@ -42,8 +33,24 @@
 	<h1>Login Form</h1>
 
 	<form method="post" on:submit|preventDefault={submitHandler}>
-		<input type="text" name="username" placeholder="Username" bind:value={username} required />
-		<input type="password" name="password" placeholder="Password" bind:value={password} required />
+		<label for="username">Username</label>
+		<input
+			aria-label="username"
+			type="text"
+			name="username"
+			placeholder="Username"
+			bind:value={username}
+			required
+		/>
+		<label for="password">Password</label>
+		<input
+			id="password"
+			type="password"
+			name="password"
+			placeholder="Password"
+			bind:value={password}
+			required
+		/>
 		<input type="text" name="token" value={token} readonly />
 		<div>{error}</div>
 		<input type="submit" />

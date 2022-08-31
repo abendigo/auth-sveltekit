@@ -1,4 +1,13 @@
-import { append } from 'svelte/internal';
+// console.log('>>>>> import.meta.url', import.meta.url);
+// const xxx = new URL('features/support/tasks/session', import.meta.url);
+// console.log('>>>>> xxx', xxx);
+import path from 'path';
+import * as url from 'url';
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const tasks = path.join(__dirname, 'features', 'support', 'tasks');
+
+console.log('>>>>', __filename, __dirname, tasks);
 
 const commonOptions = {
 	publishQuiet: true,
@@ -6,33 +15,47 @@ const commonOptions = {
 };
 
 export default {
-	...commonOptions
+	...commonOptions,
+	worldParameters: {
+		// taskdir: './tasks/session/index.ts',
+		// tasks: new URL('./features/support/tasks/session', import.meta.url),
+		// tasks: path.join(tasks, 'session'),
+		taskdir: path.join(tasks, 'session'),
+		session: 'DomainSessionHandler'
+	}
 };
 
 export const http = {
 	...commonOptions,
 	worldParameters: {
-		session: 'HttpSession'
+		taskdir: './tasks/http/index.ts',
+		session: 'HttpSessionHandler'
 	}
 };
 
 export const dom = {
 	...commonOptions,
 	worldParameters: {
-		session: 'Dom'
+		taskdir: '../../dist/dom-session-tasks.es.js',
+		session: 'DomainSessionHandler',
+		document: true
 	}
 };
 
 export const dom_http = {
 	...commonOptions,
 	worldParameters: {
-		session: 'DomHttpSession'
+		taskdir: '../../dist/dom-http-tasks.es.js',
+		session: 'HttpSessionHandler',
+		document: true
 	}
 };
 
 export const fullstack = {
 	...commonOptions,
 	worldParameters: {
-		session: 'FullStack'
+		taskdir: './tasks/fullstack/index.ts',
+		session: 'HttpSessionHandler',
+		browser: 'chromium'
 	}
 };
