@@ -6,7 +6,7 @@ import { ActorWorld, ActorParameterType } from '@cucumber/screenplay';
 import type { Actor } from '@cucumber/screenplay';
 import type World from '../support/world.js';
 
-import { visit } from '../support/tasks/session/visit.js';
+// import { visit } from '../support/tasks/session/visit.js';
 // import { authenticate, visit } from '../support/tasks/http/visit.js';
 // import { authenticate, visit } from '../support/tasks/fullstack/visit.js';
 

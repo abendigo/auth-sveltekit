@@ -2,9 +2,11 @@ import type { LoginSessionHandler } from '../screens/login.session';
 import { HttpLoginSessionHandler } from '../screens/login.session';
 
 export class HttpSessionHandler {
+  // fetch: any;
 	login: LoginSessionHandler;
 
-	constructor(baseUrl: string) {
-		this.login = new HttpLoginSessionHandler(baseUrl);
+	constructor(fetch: any, baseUrl: string) {
+    // this.fetch = fetch;
+		this.login = new HttpLoginSessionHandler(fetch, baseUrl);
 	}
 }

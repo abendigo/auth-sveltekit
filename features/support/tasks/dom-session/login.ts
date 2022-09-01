@@ -10,6 +10,9 @@ import userEvent from '@testing-library/user-event';
 import LoginScreen from '../../../../src/lib/screens/login.svelte'; // '../../src/lib/screens/login.svelte';
 import { post } from '../../../../src/routes/login/index.js';
 
+import XXX from '../../../../build/client/_app/pages/login/index.svelte-25840d3c.js';
+console.log("XXX", XXX);
+
 import type { RequestHandlerOutput } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit/types/private';
 
@@ -19,22 +22,6 @@ import type { RequestEvent } from '@sveltejs/kit/types/private';
 // import { JSDOM } from 'jsdom';
 
 // import { login as sessionLogin } from '../session/login';
-
-export const isAuthenticated = (username: string) => {
-	return async (actor: Actor<World>) => {
-		const store = actor.world.store;
-		console.log('=== dom isAuthenticated ===', { store });
-
-		// const sid: string = actor.recall('auth.sid');
-		// const locals = store.getLocals(sid);
-		// console.log('====', { sid, locals });
-		const locals = store.getLocalsForUser(username);
-		console.log('====', { locals });
-
-		console.log('isAuthenticated', locals);
-		return locals?.user !== undefined;
-	};
-};
 
 export const login = (username: string, password: string) => {
 	return async (actor: Actor<World>) => {
@@ -50,7 +37,7 @@ export const login = (username: string, password: string) => {
 		actor.remember('auth.sid', sid);
 
 		const loginSessionHandler = {
-			validate: async (username, password, token) => {
+			validate: async (username: string, password: string, token: string) => {
 				console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
 				console.log('==== dom login validate ====', username, password, token);
 
@@ -74,19 +61,20 @@ export const login = (username: string, password: string) => {
 		};
 
 		const { container, getByRole, getByLabelText } = render(
+      // XXX,
 			LoginScreen,
 			{
-				// target: document.body.appendChild(document.createElement('div')),
-				// target = target || container.appendChild(document.createElement("div"));
+		// 		// target: document.body.appendChild(document.createElement('div')),
+		// 		// target = target || container.appendChild(document.createElement("div"));
 
-				props: {
-					token: `foo:${link}`,
-					session: loginSessionHandler //new DomainLoginSessionHandler('')
-				}
+		// 		props: {
+		// 			token: `foo:${link}`,
+		// 			session: loginSessionHandler //new DomainLoginSessionHandler('')
+		// 		}
 			},
 			{ container: document.body }
 		);
-
+/*
 		console.log({ container });
 
 		const ccc = getByRole('textbox', { name: 'username' });
@@ -98,5 +86,6 @@ export const login = (username: string, password: string) => {
 		// await page.fill('input[name="username"]', username);
 		// await page.fill('input[name="password"]', password);
 		// await page.click('input[type="submit"]');
+*/
 	};
 };

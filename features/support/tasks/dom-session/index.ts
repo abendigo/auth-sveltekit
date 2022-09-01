@@ -1,1 +1,2 @@
-export { isAuthenticated, login } from './login';
+export { login } from './login';
+export { isAuthenticated } from './isAuthenticated';

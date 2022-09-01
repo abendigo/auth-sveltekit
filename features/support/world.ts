@@ -126,8 +126,8 @@ Before(async function (this: MyWorld /*, arg: ITestCaseHookParameter */) {
 	console.log('BEFORE', this.parameters);
 
 	if (this.parameters.taskdir) {
-		// await asyncAssignTasks(this, this.parameters.taskdir);
-		lazyAssignTasks(this, this.parameters.taskdir);
+		await asyncAssignTasks(this, this.parameters.taskdir);
+		// lazyAssignTasks(this, this.parameters.taskdir);
 		// this.tasks = await import(this.parameters.taskdir);
 	}
 	console.log('=== tasks ===', this.login, this.visit);
@@ -152,7 +152,7 @@ Before(async function (this: MyWorld /*, arg: ITestCaseHookParameter */) {
 	}
 
 	if (this.parameters.session === 'HttpSessionHandler') {
-		const { handler } = await import('../../build/handler.js');
+		const { handler } = await import('../../build/handler');
 
 		const port = 3030; // need to figure out a way to change this
 

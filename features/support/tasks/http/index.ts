@@ -1,2 +1,3 @@
-export { isAuthenticated, login } from './login.js';
-export { visit } from './visit.js';
+export { isAuthenticated } from './isAuthenticated';
+export { login } from './login';
+export { visit } from './visit';

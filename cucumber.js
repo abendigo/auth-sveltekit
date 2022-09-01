@@ -28,7 +28,7 @@ export default {
 export const http = {
 	...commonOptions,
 	worldParameters: {
-		taskdir: './tasks/http/index.ts',
+		taskdir: path.join(tasks, 'http'),
 		session: 'HttpSessionHandler'
 	}
 };
@@ -36,7 +36,8 @@ export const http = {
 export const dom = {
 	...commonOptions,
 	worldParameters: {
-		taskdir: '../../dist/dom-session-tasks.es.js',
+		// taskdir: '../../dist/dom-session-tasks.es.js',
+    taskdir: path.join(tasks, 'dom-session'),
 		session: 'DomainSessionHandler',
 		document: true
 	}

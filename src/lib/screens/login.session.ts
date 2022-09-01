@@ -5,8 +5,16 @@ export abstract class LoginSessionHandler extends SessionHandler {
 }
 
 export class HttpLoginSessionHandler extends LoginSessionHandler {
+  fetch: any;
+
+  constructor(fetch: any, baseUrl: string) {
+    super(baseUrl);
+
+    this.fetch = fetch;
+  }
+
 	async validate(username: string, password: string, token: string) {
-		return fetch(`${this.baseUrl}/login`, {
+		return this.fetch(`${this.baseUrl}/login`, {
 			method: 'post',
 			mode: 'cors',
 			headers: {
@@ -17,7 +25,7 @@ export class HttpLoginSessionHandler extends LoginSessionHandler {
 				password,
 				token
 			})
-		}).then((response) => {
+		}).then((response: any) => {
 			return response.json();
 		});
 		// .catch((error) => {

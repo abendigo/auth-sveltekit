@@ -2,10 +2,10 @@
 	import { HttpSessionHandler } from '../lib/sessionHandler/HttpSessionHandler';
 
 	/** @type {import('./[slug]').Load} */
-	export async function load(/*{ params, fetch, session, stuff }*/) {
+	export async function load({ params, fetch, session, stuff }) {
 		return {
 			stuff: {
-				sessionHandler: new HttpSessionHandler('')
+				sessionHandler: new HttpSessionHandler(fetch, '')
 			}
 		};
 	}
