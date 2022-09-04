@@ -1,4 +1,4 @@
-import { v4 as uuid } from '@lukeed/uuid';
+// import { v4 as uuid } from '@lukeed/uuid';
 import type { Handle } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit/types/private';
 import * as cookie from 'cookie';
@@ -11,9 +11,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const store = getStore() || createStore();
 
 	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
-	const sid = cookies[SESSION_COOKIE] || uuid();
+	event.locals.userid = cookies['userid'] || crypto.randomUUID();
 
-	event.locals = store.getLocals(sid) || store.createLocals(sid, {});
+	// const sid = cookies[SESSION_COOKIE] || uuid();
+	// const sid = cookies['userid'] || crypto.randomUUID();
+
+	// event.locals = store.getLocals(sid) || store.createLocals(sid, {});
 
 	// console.log('==== before ===================', event.locals);
 	const response = await resolve(event);
@@ -24,7 +27,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		// set a cookie so that we recognise them when they return
 		response.headers.set(
 			'set-cookie',
-			cookie.serialize(SESSION_COOKIE, sid, {
+			cookie.serialize('userid', event.locals.userid, {
+				// cookie.serialize(SESSION_COOKIE, sid, {
 				path: '/',
 				httpOnly: true
 			})
@@ -34,8 +38,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-export function getSession(event: RequestEvent): App.Session {
-	const { locals } = event;
+// export function getSession(event: RequestEvent): App.Session {
+// 	const { locals } = event;
 
-	return { ...locals };
-}
+// 	return { ...locals };
+// }

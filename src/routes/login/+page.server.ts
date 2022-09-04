@@ -4,7 +4,7 @@ import type { RequestEvent } from '@sveltejs/kit/types/private';
 // import { deleteLocals, getUser, getLocalsByLink, updateLocals } from '../../lib/store.js';
 import { getStore } from '../../lib/store.js';
 
-export const post: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
 	const store = getStore();
 
 	const { username, password, token }: { username: string; password: string; token: string } =

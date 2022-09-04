@@ -16,13 +16,13 @@ declare namespace App {
 	// 	id: string;
 	// }
 
-	interface Session {
-		id: string;
-		link?: string;
-		'csrf.token'?: string;
-	}
+	// interface Session {
+	// 	id: string;
+	// 	link?: string;
+	// 	'csrf.token'?: string;
+	// }
 
-	interface Stuff {
-		sessionHandler?: SessionHandler;
-	}
+	// interface Stuff {
+	// 	sessionHandler?: SessionHandler;
+	// }
 }

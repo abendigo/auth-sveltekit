@@ -4,11 +4,15 @@ import {
 	Before,
 	BeforeAll,
 	After
+	// IWorldOptions
 	// AfterAll
 } from '@cucumber/cucumber';
 import type { IWorldOptions } from '@cucumber/cucumber';
+// import type { IWorldOptions } from '@cucumber/cucumber';
 // import type { ITestCaseHookParameter, IWorldOptions } from '@cucumber/cucumber';
 import { ActorParameterType, ActorWorld } from '@cucumber/screenplay';
+import type { IActorWorldOptions } from '@cucumber/screenplay';
+// import { IActorWorldOptions } from '@cucumber/screenplay/dist/src/ActorWorld';
 
 // import ActorWorld from './ActorWorld.js';
 
@@ -23,57 +27,57 @@ import { JSDOM } from 'jsdom';
 import path from 'path';
 import { readdirSync } from 'fs';
 
-async function asyncAssignTasks<T>(thisObj: T, tasksDir: string): Promise<void> {
-	if (!tasksDir) throw new Error(`tasksDir was ${tasksDir}`);
-	const files = readdirSync(tasksDir);
-	for (const file of files) {
-		const match = file.match(/(\.ts|\.js|\.tsx|\.jsx)$/);
-		if (match) {
-			const ext = match[1];
-			const name = path.basename(file, ext);
-			Object.defineProperty(thisObj, name, {
-				value: await loadTask(name)
-			});
-		}
-	}
+// async function asyncAssignTasks<T>(thisObj: T, tasksDir: string): Promise<void> {
+// 	if (!tasksDir) throw new Error(`tasksDir was ${tasksDir}`);
+// 	const files = readdirSync(tasksDir);
+// 	for (const file of files) {
+// 		const match = file.match(/(\.ts|\.js|\.tsx|\.jsx)$/);
+// 		if (match) {
+// 			const ext = match[1];
+// 			const name = path.basename(file, ext);
+// 			Object.defineProperty(thisObj, name, {
+// 				value: await loadTask(name)
+// 			});
+// 		}
+// 	}
 
-	async function loadTask(name: string) {
-		const path = `${tasksDir}/${name}`;
-		try {
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			// const task = await import(path + '.js');
-			const task = await import(path);
-			return task[name];
-		} catch (err) {
-			console.log('>>>>> err', err);
-			return () => {
-				throw new Error(`No task in: ${path}.{ts,js,tsx,jsx}`);
-			};
-		}
-	}
-}
+// 	async function loadTask(name: string) {
+// 		const path = `${tasksDir}/${name}`;
+// 		try {
+// 			// eslint-disable-next-line @typescript-eslint/no-var-requires
+// 			// const task = await import(path + '.js');
+// 			const task = await import(path);
+// 			return task[name];
+// 		} catch (err) {
+// 			console.log('>>>>> err', err);
+// 			return () => {
+// 				throw new Error(`No task in: ${path}.{ts,js,tsx,jsx}`);
+// 			};
+// 		}
+// 	}
+// }
 
-function lazyAssignTasks<T>(thisObj: T, tasksDir: string): void {
-	if (!tasksDir) throw new Error(`tasksDir was ${tasksDir}`);
-	const files = readdirSync(tasksDir);
-	for (const file of files) {
-		const match = file.match(/(\.ts|\.js|\.tsx|\.jsx)$/);
-		if (match) {
-			const ext = match[1];
-			const name = path.basename(file, ext);
-			Object.defineProperty(thisObj, name, {
-				value: loadTask(name)
-			});
-		}
-	}
+// function lazyAssignTasks<T>(thisObj: T, tasksDir: string): void {
+// 	if (!tasksDir) throw new Error(`tasksDir was ${tasksDir}`);
+// 	const files = readdirSync(tasksDir);
+// 	for (const file of files) {
+// 		const match = file.match(/(\.ts|\.js|\.tsx|\.jsx)$/);
+// 		if (match) {
+// 			const ext = match[1];
+// 			const name = path.basename(file, ext);
+// 			Object.defineProperty(thisObj, name, {
+// 				value: loadTask(name)
+// 			});
+// 		}
+// 	}
 
-	function loadTask(name: string) {
-		console.log('>>>> LOADTASK', name);
-		return () => {
-			console.log('>>>> task loaded', name);
-		};
-	}
-}
+// 	function loadTask(name: string) {
+// 		console.log('>>>> LOADTASK', name);
+// 		return () => {
+// 			console.log('>>>> task loaded', name);
+// 		};
+// 	}
+// }
 
 // import { login, isAuthenticated } from './tasks/session/index.js';
 
@@ -83,15 +87,16 @@ export default class MyWorld extends ActorWorld {
 	browser: Browser | undefined;
 	document: any;
 	store: any;
-	tasks: any;
+	// tasks: any;
 
 	public isAuthenticated: any;
 	public login: any;
 	public visit: any;
 
+	// constructor(props: IWorldOptions) {
 	constructor(props: IWorldOptions) {
-		console.log('>>>>> Myworld constructor');
-		super(props);
+		console.log('>>>>> Myworld constructor', props);
+		super({ ...props, packageType: 'module' });
 		console.log('>>>>> Myworld constructor', this.parameters);
 	}
 }
@@ -125,8 +130,9 @@ let server: { close: any };
 Before(async function (this: MyWorld /*, arg: ITestCaseHookParameter */) {
 	console.log('BEFORE', this.parameters);
 
-	if (this.parameters.taskdir) {
-		await asyncAssignTasks(this, this.parameters.taskdir);
+	if (this.promise) {
+		await this.promise;
+		// await asyncAssignTasks(this, this.parameters.taskdir);
 		// lazyAssignTasks(this, this.parameters.taskdir);
 		// this.tasks = await import(this.parameters.taskdir);
 	}

@@ -20,7 +20,7 @@ export default {
 		// taskdir: './tasks/session/index.ts',
 		// tasks: new URL('./features/support/tasks/session', import.meta.url),
 		// tasks: path.join(tasks, 'session'),
-		taskdir: path.join(tasks, 'session'),
+		tasks: path.join(tasks, 'session'),
 		session: 'DomainSessionHandler'
 	}
 };
@@ -28,7 +28,7 @@ export default {
 export const http = {
 	...commonOptions,
 	worldParameters: {
-		taskdir: path.join(tasks, 'http'),
+		tasks: path.join(tasks, 'http'),
 		session: 'HttpSessionHandler'
 	}
 };
@@ -37,7 +37,7 @@ export const dom = {
 	...commonOptions,
 	worldParameters: {
 		// taskdir: '../../dist/dom-session-tasks.es.js',
-    taskdir: path.join(tasks, 'dom-session'),
+		tasks: path.join(tasks, 'dom-session'),
 		session: 'DomainSessionHandler',
 		document: true
 	}

@@ -5,33 +5,44 @@ export abstract class LoginSessionHandler extends SessionHandler {
 }
 
 export class HttpLoginSessionHandler extends LoginSessionHandler {
-  fetch: any;
+	fetch: any;
 
-  constructor(fetch: any, baseUrl: string) {
-    super(baseUrl);
+	constructor(fetch: any, baseUrl: string) {
+		super(baseUrl);
 
-    this.fetch = fetch;
-  }
+		this.fetch = fetch;
+	}
 
 	async validate(username: string, password: string, token: string) {
-		return this.fetch(`${this.baseUrl}/login`, {
-			method: 'post',
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				username,
-				password,
-				token
+		console.log('>>>> validate', this.baseUrl, username, password);
+		return (
+			this.fetch(`${this.baseUrl}/login`, {
+				method: 'post',
+				mode: 'cors',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					username,
+					password,
+					token
+				})
 			})
-		}).then((response: any) => {
-			return response.json();
-		});
-		// .catch((error) => {
-		// 	console.log('================================');
-		// 	console.log(error);
-		// 	console.log('================================');
-		// });
+				.then(async (response: any) => {
+					console.log('>>>>> response', response.status, response.statusText);
+					const body = await response.text();
+					console.log('>>>> body', body);
+					// return response.json();
+				})
+				// .then((json: any) => {
+				// 	console.log('>>>> json', json);
+				// 	return json;
+				// })
+				.catch((error: any) => {
+					console.log('================================');
+					console.log(error);
+					console.log('================================');
+				})
+		);
 	}
 }

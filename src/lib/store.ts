@@ -1,4 +1,4 @@
-import { v4 as uuid } from '@lukeed/uuid';
+// import { v4 as uuid } from '@lukeed/uuid';
 
 // import '../../app.d.ts';
 
@@ -60,7 +60,7 @@ export function createStore() {
 			});
 		},
 
-		createLocals: function (id: string = uuid(), data?: any): App.Locals {
+		createLocals: function (id: string = crypto.randomUUID(), data?: any): App.Locals {
 			// console.log('----------- createLocals', id, locals);
 			// assert(!locals.has(id));
 
@@ -73,7 +73,7 @@ export function createStore() {
 
 			const rc = {
 				id: id,
-				link: uuid(),
+				link: crypto.randomUUID(),
 				'csrf.token': generateCSRFToken()
 				// data
 			};
